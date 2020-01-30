@@ -13,6 +13,7 @@
 - Dotenv
 - Cross-env
 - BcryptJS
+- JSON Web Tokens
 
 ## Download Project and Install Dependencies
 
