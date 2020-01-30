@@ -16,6 +16,11 @@ describe('user model functions', () => {
         expect(users.length).toBeGreaterThan(0)
     })
 
+    test('get by function', async () => {
+        const user = await usersModel.getBy({ username: "testuser1" })
+        expect(user.username).toMatch(/testuser1/i)
+    })
+
     test('get by id function', async () => {
         const user = await usersModel.getById(1)
         expect(user.username).toMatch(/testuser1/i)

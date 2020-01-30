@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../../config/dbConfig')
 
-
 const get = () => {
     return db('users')
         .select('id', 'username')
@@ -37,7 +36,6 @@ const remove = (id) => {
         .where({ id })
         .del()
 }
-
 
 module.exports = {
     get,
