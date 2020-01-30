@@ -5,6 +5,7 @@
 - Express
 - CORS
 - Helmet
+- Knex
 - Supertest
 - Jest
 - Nodemon
