@@ -6,6 +6,7 @@
 - CORS
 - Helmet
 - Knex
+- SQLite3
 - Supertest
 - Jest
 - Nodemon
