@@ -11,6 +11,7 @@ exports.up = async function(knex) {
         table.string('description', 1024)
         table.integer('goal_amount')
         table.integer('amount_received')
+        table.boolean('funding_completed').defaultTo(false)
     })
 };
 

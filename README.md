@@ -40,5 +40,7 @@
 | user_id  | string | joined with users table id, required                                            |
 | title    | string, 256 characters | Required.       |
 | description  | string | not required                                            |
+| goal_amount  | string | not required                                            |
+| amount_received  | string | not required                                            |
 
 - something goes here.
