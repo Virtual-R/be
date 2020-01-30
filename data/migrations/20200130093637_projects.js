@@ -3,6 +3,8 @@ exports.up = async function(knex) {
         table.increments('project_id')
         table.string('title', 256).notNullable()
         table.string('description', 1024)
+        table.integer('goal_amount')
+        table.integer('amount_received')
     })
 };
 
