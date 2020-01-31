@@ -9,7 +9,7 @@ const get = () => {
 const getBy = (filter) => {
     return db('users')
         .where(filter)
-        .select(['id', 'username'])
+        .select(['id', 'username', 'password'])
         .first()
 
     // const projects = await db('projects').where('user_id', id)

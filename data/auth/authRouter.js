@@ -36,6 +36,7 @@ router.post('/login', async (req, res, next) => {
     try {
         const { username, password } = req.body
         const user = await usersModel.getBy({username}).first()
+        console.log(user)
         const passwordValid = await bcrypt.compare(password, user.password)
 
         if(!username || !password) {
