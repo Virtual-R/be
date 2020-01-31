@@ -42,5 +42,7 @@
 | description  | string | not required                                            |
 | goal_amount  | string | not required                                            |
 | amount_received  | string | not required                                            |
+## Developer
 
-- something goes here.
+### Stephen Tanksley - Back End API Architect
+- http://github.com/stephentanksley
