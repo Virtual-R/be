@@ -27,14 +27,14 @@ describe('user model functions', () => {
     })
 
     test('add function', async () => {
-        await usersModel.add({ username: 'testusername2', password: 'testpassword2' })
+        await usersModel.add({ username: 'testusername3', password: 'testpassword3' })
         const users = await db('users').select()
-        expect(users).toHaveLength(2)
+        expect(users).toHaveLength(3)
     })
 
     test('update function', async () => {
         await usersModel.update(1, {username: "testusername12"})
-        const user = await db('users').getById(1)
+        const user = await usersModel.getById(1)
         expect(user.username).toMatch(/testusername12/i)
     })
 

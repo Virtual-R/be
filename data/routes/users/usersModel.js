@@ -9,26 +9,46 @@ const get = () => {
 const getBy = (filter) => {
     return db('users')
         .where(filter)
-        .select('id', 'username')
+        .select(['id', 'username'])
+        .first()
+
+    // const projects = await db('projects').where('user_id', id)
+    //     .select('project_id', 'user_id', 'title', 'description', 'goal_amount', 'amount_received', 'funding_completed')
+
+    // projects.map((project) => {
+    //     return {...project, funding_completed: project.funding_completed === 1 ? true : false }
+    // })
+    // return {...user, projects}
 }
 
-const getById = (id) => {
-    return db('users')
+const getById = async (id) => {
+    const user = await db('users')
         .where({ id })
         .first('id', 'username')
+
+    const projects = await db('projects')
+        .where('user_id', id)
+        .select('project_id', 'user_id', 'title', 'description', 'goal_amount', 'amount_received', 'funding_completed')
+
+    projects.map((project) => {
+        return {...project, funding_completed: project.funding_completed === 1 ? true : false }
+    })
+    return {...user, projects}
 }
 
 const add = async (user) => {
     user.password = await bcrypt.hash(user.password, 12)
-    const [id] = await db('users').insert(user)
+    const [id] = await db('users')
+        .insert(user)
     return getById(id)
 }
 
 const update = async (id, changes) => {
     await db('users')
-        .where({id})
+        .where({ id })
         .update(changes)
-    return getById(id)
+        
+        return getById(id)
 }
 
 const remove = (id) => {

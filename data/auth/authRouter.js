@@ -9,9 +9,9 @@ router.post('/register', async (req, res, next) => {
     try {
         const { username, password } = req.body
         const newUser = 
-        username && password
-        ? await usersModel.add({ username, password})
-        : res.status(500).json({ message: "Missing required information."})
+            username && password
+            ? await usersModel.add({ username, password})
+            : res.status(500).json({ message: "Missing required information."})
         res.status(201).json(newUser)
     }
     catch (error) {
@@ -38,20 +38,24 @@ router.post('/login', async (req, res, next) => {
         const user = await usersModel.getBy({username}).first()
         const passwordValid = await bcrypt.compare(password, user.password)
 
-        if(user && passwordValid) {
-            const token = generateToken(user)
-
-            res.status(200).json({
-                message: `Welcome, ${user.username}.`,
-                token: token,
-            })
-        } else {
+        if(!username || !password) {
             res.status(401).json({
                 message: 'Invalid credentials.'
             })
+        } else {
+            if(user && passwordValid) {
+                const token = generateToken(user)
+    
+                res.status(200).json({
+                    message: `Welcome, ${user.username}.`,
+                    token: token,
+                })
+            }
         }
     }
     catch (error) {
         next(error)
     }
 })
+
+module.exports = router;
