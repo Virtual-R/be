@@ -12,4 +12,18 @@ server.use(express.json());
 server.use('/api/auth', authRouter);
 server.use('/api/users', usersRouter);
 
+
+server.get('/', (req, res, next) => {
+    res.json({
+        message: 'Virtual Reality Funding project API.'
+    })
+})
+
+server.use((err, req, res, next) => {
+    console.log("Error: ", err)
+    res.status(500).json({
+        message: "Something went horribly wrong."
+    })
+})
+
 module.exports = server;
