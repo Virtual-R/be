@@ -40,5 +40,14 @@
 | user_id  | string | joined with users table id, required                                            |
 | title    | string, 256 characters | Required.       |
 | description  | string | not required                                            |
+| goal_amount  | string | not required                                            |
+| amount_received  | string | not required                                            |
+## Developer
 
-- something goes here.
+### Stephen Tanksley - Back End API Architect
+- http://github.com/stephentanksley
+
+
+//NOTE TO SELF - Create a categories table that you can reference in the project table. If something changes, you want to be able to change the reference in only one place.
+
+//NOTE TO SELF - 
