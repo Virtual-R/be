@@ -10,15 +10,6 @@ const getBy = (filter) => {
     return db('users')
         .where(filter)
         .select(['id', 'username', 'password'])
-        .first()
-
-    // const projects = await db('projects').where('user_id', id)
-    //     .select('project_id', 'user_id', 'title', 'description', 'goal_amount', 'amount_received', 'funding_completed')
-
-    // projects.map((project) => {
-    //     return {...project, funding_completed: project.funding_completed === 1 ? true : false }
-    // })
-    // return {...user, projects}
 }
 
 const getById = async (id) => {
@@ -37,7 +28,7 @@ const getById = async (id) => {
 }
 
 const add = async (user) => {
-    user.password = await bcrypt.hash(user.password, 12)
+    user.password = await bcrypt.hash(user.password, 10)
     const [id] = await db('users')
         .insert(user)
     return getById(id)

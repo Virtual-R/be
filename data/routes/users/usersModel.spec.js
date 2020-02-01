@@ -17,7 +17,7 @@ describe('user model functions', () => {
     })
 
     test('get by function', async () => {
-        const user = await usersModel.getBy({ username: "testuser1" })
+        const user = await usersModel.getBy({username: "testuser1"})
         expect(user.username).toMatch(/testuser1/i)
     })
 
