@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', async () => {
+router.get('/:id', async (req, res, next) => {
     try { 
         const payload = await usersModel.getById(req.params.id)
         res.status(200).json(payload)
