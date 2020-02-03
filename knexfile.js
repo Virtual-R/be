@@ -32,7 +32,20 @@ module.exports = {
       filename: './data/test.sqlite3'
     },
   },
+
+  production: {
+    client: 'pg',
+    migrations: {
+      directory: "./data/migrations",
+    },
+    seeds: {
+      directory: "./data/seeds"
+    },
+    connection: process.env.DATABASE_URL
+    },
+  },
 };
+
 
 //need to run npx knex migrate:latest --env=dev/test.
 //need to run npx knex seed:run --env=dev/test

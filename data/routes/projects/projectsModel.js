@@ -1,12 +1,9 @@
 const db = require('../../config/dbConfig')
 
-
-//MOVED TO OVERVIEWMODEL.JS --->
-
-// const get = () => {
-//     return db('projects')
-//         .select()
-// }
+const get = () => {
+    return db('projects')
+        .select()
+}
 
 const getBy = (filter) => {
     return db('projects')
@@ -39,7 +36,7 @@ const remove = (project_id) => {
 }
 
 module.exports = {
-    // get, 
+    get, 
     getBy, 
     getById, 
     add, 

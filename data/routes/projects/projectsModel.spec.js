@@ -1,6 +1,5 @@
 const db = require('../../config/dbConfig')
 const projectsModel = require('./projectsModel')
-const overviewModel = require('../overview/overviewModel')
 
 beforeEach(async () => {
     await db.seed.run()
@@ -8,8 +7,14 @@ beforeEach(async () => {
 
 describe('project model functions', () => {
 
+    test('get function', async () => {
+        const overview = await projectsModel.get()
+        expect(overview.length).toBeGreaterThan(0)
+    })    
+
     test('get by function', async () => {
         const project = await projectsModel.getBy({title: "Aenigma"})
+        console.log(project)
         expect(project.title).toBe('Aenigma')
     })
 
@@ -39,7 +44,7 @@ describe('project model functions', () => {
 
     test('delete function', async () => {
         await projectsModel.remove(1)
-        const projects = await overviewModel.get()
+        const projects = await projectsModel.get()
         expect(projects).toHaveLength(2)
     })
 })
