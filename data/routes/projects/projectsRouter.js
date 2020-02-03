@@ -1,5 +1,4 @@
 const projectsModel = require('../projects/projectsModel')
-const overview = require('../overview/overviewModel')
 const router = require('express').Router()
 
 router.get('/', async (req, res, next) => {

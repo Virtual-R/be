@@ -7,6 +7,7 @@
 - Helmet
 - Knex
 - SQLite3
+- Postgres
 - Supertest
 - Jest
 - Nodemon
