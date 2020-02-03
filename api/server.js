@@ -1,7 +1,9 @@
 const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
-const logger = require('../data/middleware/logger')
+
+//see if the build works with this just commented out. If it works, delete the logger.
+// const logger = require('../data/middleware/logger')
 const authRouter = require('../data/auth/authRouter')
 const usersRouter = require('../data/routes/users/usersRouter')
 const overviewRouter = require('../data/routes/overview/overviewRouter')
