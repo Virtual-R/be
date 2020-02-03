@@ -37,14 +37,13 @@ module.exports = {
     client: 'pg',
     migrations: {
       directory: "./data/migrations",
-    },
+      },
     seeds: {
       directory: "./data/seeds"
-    },
+      },
     connection: process.env.DATABASE_URL
     },
-  },
-};
+  };
 
 
 //need to run npx knex migrate:latest --env=dev/test.
