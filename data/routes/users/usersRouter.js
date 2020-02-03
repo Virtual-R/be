@@ -1,6 +1,7 @@
 const express = require('express')
 const usersModel = require('./usersModel')
 const projectsRouter = require('../projects/projectsRouter')
+const authenticate = require('../../middleware/authenticate')
 
 
 const router = express.Router()
@@ -17,7 +18,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', authenticate(), async (req, res, next) => {
     try { 
         const payload = await usersModel.getById(req.params.id)
         res.status(200).json(payload)
@@ -27,6 +28,7 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+//no need to authenticate here because we have to add a user.
 router.post('/', async (req, res, next) => {
     try {
         const user = await usersModel.add(req.body)
@@ -37,7 +39,7 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', authenticate(), async (req, res, next) => {
     const changes = {
         username: req.body.username,
         password: req.body.password,
@@ -51,7 +53,7 @@ router.put('/:id', async (req, res, next) => {
     }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', authenticate(), async (req, res, next) => {
     try {
         const deletedUser = await usersModel.remove(req.params.id)
 

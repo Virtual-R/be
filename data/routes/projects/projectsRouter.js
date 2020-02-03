@@ -1,5 +1,6 @@
 const projectsModel = require('../projects/projectsModel')
 const router = require('express').Router()
+const { validateProject, validateProjectId } = require('../../middleware/validate')
 
 router.get('/', async (req, res, next) => {
     try {
@@ -10,6 +11,10 @@ router.get('/', async (req, res, next) => {
     catch (error) {
         next(error)
     }
+})
+
+router.get('/:id', validateProjectId(), async (req, res, next) => {
+
 })
 
 module.exports = router;
