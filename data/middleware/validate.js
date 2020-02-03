@@ -45,3 +45,9 @@ const validateProjectId = () => async (req, res, next) => {
     next()
 }
 
+module.exports = { 
+    validateUser,
+    validateUserId,
+    validateProject,
+    validateProjectId
+}
