@@ -14,7 +14,13 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', validateProjectId(), async (req, res, next) => {
-
+    try {
+        const payload = await projectsModel.getById(req.params.id)
+        res.status(200).json(payload)
+    }
+    catch (error) {
+        next(error)
+    }
 })
 
 module.exports = router;
