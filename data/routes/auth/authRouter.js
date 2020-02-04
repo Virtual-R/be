@@ -1,11 +1,11 @@
 const router = require('express').Router()
-const usersModel = require('../routes/users/usersModel')
+const usersModel = require('../users/usersModel')
 
 const jwt = require('jsonwebtoken')
-const secrets = require('../config/secrets')
+const secrets = require('../../config/secrets')
 const bcrypt = require('bcryptjs')
 
-const { validateUser, validateUserId } = require('../middleware/validate')
+const { validateUser, validateUserId } = require('../../middleware/validate')
 
 router.post('/register', validateUser(), async (req, res, next) => {
     try {
@@ -38,21 +38,19 @@ router.post('/login', validateUserId(), async (req, res, next) => {
     try {
         const { username, password } = req.body
         const user = await usersModel.getBy({username}).first()
-        const passwordValid = await bcrypt.compareSync(req.body.password, user.password)
+        const passwordValid = await bcrypt.compare(req.body.password, user.password)
 
-        if(!username || !password) {
-            res.status(401).json({
-                message: 'Invalid credentials.'
-            })
-        } else {
             if(user && passwordValid) {
                 const token = generateToken(user)
-    
+
                 res.status(200).json({
                     message: `Welcome, ${user.username}.`,
                     token: token,
                 })
-            }
+            } else { 
+                res.status(401).json({
+                    message: 'Invalid credentials.'
+                })
         }
     }
     catch (error) {
