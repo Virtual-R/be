@@ -24,7 +24,7 @@ const validateProject = () => async (req, res, next) => {
         return res
             .status(400)
             .json({ message: "Missing required data. "})
-    } else if (!req.body.user_id || !req.body.title) {
+    } else if (!req.body.userId || !req.body.title) {
         return res
             .status(400)
             .json({ message: "Please fill out all required fields."})
