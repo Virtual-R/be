@@ -1,11 +1,11 @@
 const router = require('express').Router()
-const usersModel = require('../routes/users/usersModel')
+const usersModel = require('../users/usersModel')
 
 const jwt = require('jsonwebtoken')
-const secrets = require('../config/secrets')
+const secrets = require('../../config/secrets')
 const bcrypt = require('bcryptjs')
 
-const { validateUser, validateUserId } = require('../middleware/validate')
+const { validateUser, validateUserId } = require('../../middleware/validate')
 
 router.post('/register', validateUser(), async (req, res, next) => {
     try {

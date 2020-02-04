@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.use('/:id/projects', projectsRouter)
 
-router.get('/', async (req, res, next) => {
+router.get('/', authenticate(), async (req, res, next) => {
     try {
         const users = await usersModel.get()
         res.status(200).json(users)

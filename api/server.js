@@ -4,7 +4,7 @@ const cors = require('cors')
 
 //see if the build works with this just commented out. If it works, delete the logger.
 const logger = require('../data/middleware/logger')
-const authRouter = require('../data/auth/authRouter')
+const authRouter = require('../data/routes/auth/authRouter')
 const usersRouter = require('../data/routes/users/usersRouter')
 const overviewRouter = require('../data/routes/overview/overviewRouter')
 
