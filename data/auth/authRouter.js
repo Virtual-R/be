@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken')
 const secrets = require('../config/secrets')
 const bcrypt = require('bcryptjs')
 
-router.post('/register', async (req, res, next) => {
+const { validateUser, validateUserId } = require('../middleware/validate')
+
+router.post('/register', validateUser(), async (req, res, next) => {
     try {
         const { username, password } = req.body
         const newUser = 
@@ -19,7 +21,7 @@ router.post('/register', async (req, res, next) => {
     }
 })
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', validateUserId(), async (req, res, next) => {
     const generateToken = (user) => {
         const payload = {
             subject: user.id,
@@ -36,8 +38,6 @@ router.post('/login', async (req, res, next) => {
     try {
         const { username, password } = req.body
         const user = await usersModel.getBy({username}).first()
-        console.log(user)
-        console.log(req.body)
         const passwordValid = await bcrypt.compare(req.body.password, user.password)
 
         if(!username || !password) {
