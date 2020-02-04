@@ -17,23 +17,25 @@ const getById = async (project_id) => {
         return project
 }
 
-const add = async (project) => {
-    const [id] = await db('projects').insert(project)
-    return getById(id)
-}
-
-//apparently this is how it would need to be set up for the migration to postgres?
-// const add = (project) => {
-//     return db('projects').insert(project).returning('*')
+// const add = async (project) => {
+//     const [id] = await db('projects').insert(project)
+//     return getById(id)
 // }
 
-const update = async (project_id, changes) => {
-    await db('projects')
-        .where({ project_id })
-        .update(changes)
-
-        return getById(project_id)
+//apparently this is how it would need to be set up for the migration to postgres?
+const add = (project) => {
+    return db('projects')
+        .insert(project)
+        .returning('*')
 }
+
+// const update = async (project_id, changes) => {
+//     await db('projects')
+//         .where({ project_id })
+//         .update(changes)
+
+//         return getById(project_id)
+// }
 
 const remove = (project_id) => {
     return db('projects')
