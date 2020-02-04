@@ -37,6 +37,13 @@ const add = (project) => {
 //         return getById(project_id)
 // }
 
+const update = (id, changes) => {
+    return db('projects')
+        .where({ id })
+        .update(changes)
+        .returning('*')
+}
+
 const remove = (project_id) => {
     return db('projects')
         .where({ project_id })
