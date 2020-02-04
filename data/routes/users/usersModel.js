@@ -34,6 +34,12 @@ const add = async (user) => {
     return getById(id)
 }
 
+//Apparently this is how I would need to set it up for postgres?
+// const add = (user) => {
+//     user.password =  bcrypt.hash(user.password, 10)
+//     return db('users').insert(user).returning('*')
+// }
+
 const update = async (id, changes) => {
     await db('users')
         .where({ id })
@@ -41,6 +47,13 @@ const update = async (id, changes) => {
         
         return getById(id)
 }
+
+//this is how I would need it to migrate to postgres
+// const update = (id, changes) => {
+//     return db('users')
+//         .where({ id })
+//         .update(changes).returning('*')
+// }
 
 const remove = (id) => {
     return db('users')
