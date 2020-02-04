@@ -38,7 +38,7 @@ router.post('/login', validateUserId(), async (req, res, next) => {
     try {
         const { username, password } = req.body
         const user = await usersModel.getBy({username}).first()
-        const passwordValid = await bcrypt.compare(req.body.password, user.password)
+        const passwordValid = await bcrypt.compareSync(req.body.password, user.password)
 
         if(!username || !password) {
             res.status(401).json({
