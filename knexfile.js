@@ -41,7 +41,11 @@ module.exports = {
     seeds: {
       directory: "./data/seeds"
       },
-    connection: process.env.DATABASE_URL
+    connection: process.env.DATABASE_URL,
+    pool: {
+      min: 2,
+      max: 10
+      },
     },
   };
 
