@@ -15,6 +15,7 @@
 - Cross-env
 - BcryptJS
 - JSON Web Tokens
+- Knex Cleaner
 
 ## Download Project and Install Dependencies
 
