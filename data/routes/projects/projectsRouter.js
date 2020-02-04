@@ -1,5 +1,6 @@
 const projectsModel = require('../projects/projectsModel')
 const router = require('express').Router()
+const authenticate = require('../../middleware/authenticate')
 const { validateProject, validateProjectId } = require('../../middleware/validate')
 
 router.get('/', async (req, res, next) => {
