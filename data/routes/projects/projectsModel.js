@@ -31,9 +31,19 @@ const getByUserId = async (id) => {
     return {...projects}
 }
 
-const getById = async (project_id) => {
+const getById = async (id) => {
     const project = await db('projects')
-        .where({ project_id })
+        .where('project_id', id)
+        .first()
+        return project
+}
+
+
+const getByIds = async (userId, id) => {
+    const project = await db('projects')
+        .where({ 
+            user_id: userId, 
+            project_id: id })
         .first()
         return project
 }
@@ -75,7 +85,8 @@ module.exports = {
     get, 
     getBy,
     getByUserId,
-    getById, 
+    getById,
+    getByIds, 
     add, 
     update, 
     remove

@@ -4,9 +4,9 @@ const authenticate = require('../../middleware/authenticate')
 const { validateProject, validateProjectId } = require('../../middleware/validate')
 
 router.get('/', authenticate, async (req, res, next) => {
-    console.log('req params id', req.params.id)
+    console.log('req params id', req.params.userId)
         try {
-            const projects = await projectsModel.getByUserId(req.params.id)
+            const projects = await projectsModel.getByUserId(req.params.userId)
             console.log('project console log', projects)
             if(projects) {
                 res.status(200).json(projects)
@@ -20,8 +20,9 @@ router.get('/', authenticate, async (req, res, next) => {
 })
 
 router.get('/:id', authenticate, async (req, res, next) => {
-    console.log('user id?', req.params.id)
+    console.log('user id - ', req.params.userId)
     try {
+        console.log('project id - ', req.params.id)
         const payload = await projectsModel.getById(req.params.id)
         res.status(200).json(payload)
     }
