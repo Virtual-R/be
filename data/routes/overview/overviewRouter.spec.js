@@ -14,5 +14,4 @@ describe('projects router tests', () => {
         expect(res.status).toBe(200)
         expect(res.type).toBe('application/json')
     })
-
 })

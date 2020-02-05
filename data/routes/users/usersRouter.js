@@ -40,7 +40,7 @@ router.get('/:id', authenticate, validateUserId, async (req, res, next) => {
 //     }
 // })
 
-router.put('/:id', validateUser(), authenticate(), validateUserId(), async (req, res, next) => {
+router.put('/:id', validateUser, authenticate, validateUserId, async (req, res, next) => {
     const changes = {
         username: req.body.username,
         password: req.body.password,
@@ -54,7 +54,7 @@ router.put('/:id', validateUser(), authenticate(), validateUserId(), async (req,
     }
 })
 
-router.delete('/:id', authenticate(), validateUserId(), async (req, res, next) => {
+router.delete('/:id', validateUserId, authenticate, async (req, res, next) => {
     try {
         const deletedUser = await usersModel.remove(req.params.id)
 

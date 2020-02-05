@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 
 const { validateUser, validateUserId } = require('../../middleware/validate')
 
-router.post('/register', validateUser(), async (req, res, next) => {
+router.post('/register', validateUser, async (req, res, next) => {
     try {
         const { username, password } = req.body
         const newUser = 
@@ -22,12 +22,11 @@ router.post('/register', validateUser(), async (req, res, next) => {
 })
 
 //async operation
-router.post('/login', /*validateUser(), validateUserId(),*/ async (req, res, next) => {
-    console.log(req.body)
+router.post('/login', validateUser, validateUserId, async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        console.log('show me the username', username)
-        console.log('show me the password', password)
+        // console.log('show me the username', username)
+        // console.log('show me the password', password)
         const user = await usersModel.getBy({ username })
         const passwordValid = await bcrypt.compare(password, user.password)
         console.log('password valid?', passwordValid)

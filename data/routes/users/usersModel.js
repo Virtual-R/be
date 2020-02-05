@@ -6,11 +6,10 @@ const get = () => {
         .select('id', 'username')
     }
     
-    const getBy = (filter) => {
-        console.log(filter)
-        return db('users')
-        .where(filter)
-        .first()
+const getBy = (filter) => {
+    return db('users')
+    .where(filter)
+    .first(['id', 'username', 'password'])
 }
 
 const getById = async (id) => {
@@ -28,26 +27,11 @@ const getById = async (id) => {
     return {...user, projects}
 }
 
-// const add = async (user) => {
-//     user.password = bcrypt.hash(user.password, 10)
-//     const [id] = await db('users')
-//         .insert(user)
-//     return getById(id)
-// }
-
 //Apparently this is how I would need to set it up for postgres?
 const add = (user) => {
     user.password =  bcrypt.hashSync(user.password, 10)
     return db('users').insert(user).returning('*')
 }
-
-// const update = async (id, changes) => {
-//     await db('users')
-//         .where({ id })
-//         .update(changes)
-        
-//         return getById(id)
-// }
 
 //this is how I would need it to migrate to postgres
 const update = (id, changes) => {

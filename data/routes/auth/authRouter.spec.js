@@ -4,7 +4,7 @@ const db = require('../../config/dbConfig')
 
 
 beforeAll(async () => {
-    console.log('called!')
+    console.log('called from the auth router!')
     await db('users').truncate()    
 })
 
@@ -15,7 +15,6 @@ describe('auth router tests', () => {
         const res = await request(server)
             .post('/api/auth/register')
             .send({ username: "testuser5", password: "testpassword5"})
-            // console.log(res.body)
         expect(res.status).toBe(201)
         expect(res.type).toBe('application/json')
     })
@@ -34,7 +33,6 @@ describe('auth router tests', () => {
         const res = await request(server)
             .post('/api/auth/login')
             .send({ username: 'testuser5', password: 'testpassword5'})
-            console.log('successful login', res.body)
         expect(res.status).toBe(200)
         expect(res.type).toBe('application/json')
     })
@@ -43,7 +41,6 @@ describe('auth router tests', () => {
         const res = await request(server)
             .post('/api/auth/login')
             .send({ username: 'testuser5', password: 'testpassword6'})
-            console.log('unsuccessful login', res.body)
         expect(res.status).toBe(401)
     })
 })
