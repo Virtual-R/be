@@ -44,12 +44,71 @@
 | description  | string | not required                                            |
 | goal_amount  | string | not required                                            |
 | amount_received  | string | not required                                            |
+| funding_completed  | boolean | not required                                            |
+
+
+## Endpoints
+
+    BaseURL: https://sixr-clone.herokuapp.com
+
+### - Project Overview Router
+
+1) Project Overview:
+
+    GET - /api/overview/
+
+### - Auth Router
+
+
+2) REGISTER:
+
+    POST - /api/auth/register/
+
+        {
+            "username":"insert username here", <----required
+            "password":"insert password here" <----required
+        }
+
+3) LOGIN: 
+
+    POST - /api/auth/login/
+
+        {
+            "username":"insert username here", <----required, unique.
+            "password":"insert password here" <----required
+        }
+
+        * returns a token. Assign token to "Authorization" header.
+
+### - Users Router
+
+4) GET All Users:
+
+        GET - /api/users/
+
+        * requires token from login function set to "Authorization" header.
+
+5) GET A Single User: 
+
+        GET - /api/users/:id
+
+        * requires token from login function set to "Authorization" header.
+
+6) UPDATE A User: 
+
+        PUT - /api/users/:id
+
+        {
+            "username":"insert username here", <----required
+            "password":"insert password here" <----required
+        }
+
+7) DELETE A User: 
+
+        DELETE - /api/users/:id
+
+
 ## Developer
 
 ### Stephen Tanksley - Back End API Architect
 - http://github.com/stephentanksley
-
-
-//NOTE TO SELF - Create a categories table that you can reference in the project table. If something changes, you want to be able to change the reference in only one place.
-
-//NOTE TO SELF - 
