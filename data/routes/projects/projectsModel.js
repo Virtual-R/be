@@ -1,7 +1,8 @@
 const db = require('../../config/dbConfig')
 
-const get = () => {
+const get = (id) => {
     return db('projects')
+        .where("user_id", id)
         .select()
 }
 
@@ -10,6 +11,25 @@ const getBy = (filter) => {
         .where(filter)
         .first()
     }
+
+const getByUserId = async (id) => {
+    const projects = await db('projects')
+        .where('user_id', id)
+        .select(
+            'project_id', 
+            'user_id', 
+            'title', 
+            'description', 
+            'goal_amount', 
+            'amount_received', 
+            'funding_completed',
+            )
+
+    projects.map((project) => {
+        return {...project, funding_completed: project.funding_completed === 1 ? true : false }
+    })
+    return {...projects}
+}
 
 const getById = async (project_id) => {
     const project = await db('projects')
@@ -53,7 +73,8 @@ const remove = (project_id) => {
 
 module.exports = {
     get, 
-    getBy, 
+    getBy,
+    getByUserId,
     getById, 
     add, 
     update, 

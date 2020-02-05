@@ -1,4 +1,4 @@
-# Back End API Documentation
+# `Back End API Documentation`
 
 ## Dependencies
 
@@ -23,7 +23,8 @@
 - **CD into the folder** where you downloaded the repository.
 - run `npm i` to download all dependencies.
 
-## Database Schema
+
+# `Database Schema`
 
 ### Users
 
@@ -47,7 +48,7 @@
 | funding_completed  | boolean | not required                                            |
 
 
-## Endpoints
+# `Endpoints`
 
     BaseURL: https://sixr-clone.herokuapp.com
 
@@ -108,7 +109,7 @@
         DELETE - /api/users/:id
 
 
-## Developer
+# `Developer`
 
 ### Stephen Tanksley - Back End API Architect
 - http://github.com/stephentanksley
