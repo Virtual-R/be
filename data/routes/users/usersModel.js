@@ -4,12 +4,13 @@ const db = require('../../config/dbConfig')
 const get = () => {
     return db('users')
         .select('id', 'username')
-}
-
-const getBy = (filter) => {
-    return db('users')
+    }
+    
+    const getBy = (filter) => {
+        console.log(filter)
+        return db('users')
         .where(filter)
-        .select(['id', 'username', 'password'])
+        .first()
 }
 
 const getById = async (id) => {

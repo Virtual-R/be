@@ -2,9 +2,9 @@ const request = require('supertest')
 const server = require('../../../api/server')
 const db = require('../../config/dbConfig')
 
-beforeEach(async () => {
-    await db.seed.run()
-})
+// beforeEach(async () => {
+//     await db.seed.run()
+// })
 
 describe('projects router tests', () => {
 

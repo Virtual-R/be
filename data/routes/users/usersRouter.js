@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.use('/:id/projects', projectsRouter)
 
-router.get('/', authenticate(), async (req, res, next) => {
+router.get('/', authenticate, async (req, res, next) => {
     try {
         const users = await usersModel.get()
         res.status(200).json(users)
@@ -17,7 +17,7 @@ router.get('/', authenticate(), async (req, res, next) => {
     }
 })
 
-router.get('/:id', authenticate(), validateUserId(), async (req, res, next) => {
+router.get('/:id', authenticate, validateUserId, async (req, res, next) => {
     try { 
         const payload = await usersModel.getById(req.params.id)
         res.status(200).json(payload)
