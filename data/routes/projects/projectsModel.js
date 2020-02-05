@@ -8,12 +8,13 @@ const get = () => {
 const getBy = (filter) => {
     return db('projects')
         .where(filter)
-        .select(['project_id', 'user_id', 'title', 'description', 'goal_amount', 'amount_received', 'funding_completed'])
-}
+        .first()
+    }
 
 const getById = async (project_id) => {
-    const project = await db('projects').where({ project_id })
-        .first('project_id', 'user_id', 'title', 'description', 'goal_amount', 'amount_received', 'funding_completed')
+    const project = await db('projects')
+        .where({ project_id })
+        .first()
         return project
 }
 

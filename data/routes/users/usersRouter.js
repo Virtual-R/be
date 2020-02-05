@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.use('/:id/projects', projectsRouter)
 
-router.get('/', authenticate(), async (req, res, next) => {
+router.get('/', authenticate, async (req, res, next) => {
     try {
         const users = await usersModel.get()
         res.status(200).json(users)
@@ -17,7 +17,7 @@ router.get('/', authenticate(), async (req, res, next) => {
     }
 })
 
-router.get('/:id', authenticate(), validateUserId(), async (req, res, next) => {
+router.get('/:id', authenticate, async (req, res, next) => {
     try { 
         const payload = await usersModel.getById(req.params.id)
         res.status(200).json(payload)
@@ -40,7 +40,7 @@ router.get('/:id', authenticate(), validateUserId(), async (req, res, next) => {
 //     }
 // })
 
-router.put('/:id', validateUser(), authenticate(), validateUserId(), async (req, res, next) => {
+router.put('/:id', authenticate, async (req, res, next) => {
     const changes = {
         username: req.body.username,
         password: req.body.password,
@@ -54,7 +54,7 @@ router.put('/:id', validateUser(), authenticate(), validateUserId(), async (req,
     }
 })
 
-router.delete('/:id', authenticate(), validateUserId(), async (req, res, next) => {
+router.delete('/:id', authenticate, async (req, res, next) => {
     try {
         const deletedUser = await usersModel.remove(req.params.id)
 

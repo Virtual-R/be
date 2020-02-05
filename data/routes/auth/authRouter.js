@@ -7,21 +7,24 @@ const bcrypt = require('bcryptjs')
 
 const { validateUser, validateUserId } = require('../../middleware/validate')
 
-router.post('/register', validateUser(), async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
     try {
         const { username, password } = req.body
         const newUser = 
             username && password
             ? await usersModel.add({ username, password})
             : res.status(500).json({ message: "Missing required information."})
-        res.status(201).json(newUser)
+        res
+            .status(201)
+            .json(newUser)
     }
     catch (error) {
         next(error)
     }
 })
 
-router.post('/login', validateUserId(), async (req, res, next) => {
+//async operation
+router.post('/login', async (req, res, next) => {
     const generateToken = (user) => {
         const payload = {
             subject: user.id,
@@ -31,29 +34,30 @@ router.post('/login', validateUserId(), async (req, res, next) => {
         const options = {
             expiresIn: '1d'
         };
-
         return jwt.sign(payload, secrets.jwt, options)
     }
 
     try {
         const { username, password } = req.body;
-        const user = await usersModel.getBy({username}).first()
-        const passwordValid = await bcrypt.compareSync(password, user.password)
-
-            if(user && passwordValid) {
-                const token = generateToken(user)
-
-                res.status(200).json({
-                    message: `Welcome, ${user.username}.`,
-                    token: token,
-                })
-            } else { 
-                res.status(401).json({
-                    message: 'Invalid credentials.'
-                })
+        console.log('username', username)
+        console.log('password', password)
+        const user = await usersModel.getBy({ username }).first()
+        const passwordValid = await bcrypt.compare(password, user.password)
+        
+        if(user && passwordValid) {
+            const token = generateToken(user)
+            res.status(200).json({
+                message: `Welcome, ${user.username}.`,
+                token: token,
+            })
+        } else if (!user || !passwordValid) { 
+            res.status(401).json({
+                message: 'Invalid credentials.'
+            })
         }
     }
     catch (error) {
+        console.log(error)
         next(error)
     }
 })

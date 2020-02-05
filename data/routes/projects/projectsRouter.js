@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', validateProjectId(), async (req, res, next) => {
+router.get('/:id', validateProjectId, async (req, res, next) => {
     try {
         const payload = await projectsModel.getById(req.params.id)
         res.status(200).json(payload)
@@ -24,7 +24,7 @@ router.get('/:id', validateProjectId(), async (req, res, next) => {
     }
 })
 
-router.post('/', validateProject(), async (req, res, next) => {
+router.post('/', validateProject, async (req, res, next) => {
     try {
         const project = await projectsModel.add(req.body)
         res.status(201).json(project)
@@ -34,7 +34,7 @@ router.post('/', validateProject(), async (req, res, next) => {
     }
 })
 
-router.put(':id', validateProject(), authenticate(), validateProjectId(), async (req, res, next) => {
+router.put(':id', validateProject, authenticate, validateProjectId, async (req, res, next) => {
     const changes = {
         user_id: req.body.user_id,
         title: req.body.title,
@@ -52,7 +52,7 @@ router.put(':id', validateProject(), authenticate(), validateProjectId(), async 
     }
 })
 
-router.delete('/:id', authenticate(), validateProjectId(), async (req, res, next) => {
+router.delete('/:id', authenticate, validateProjectId, async (req, res, next) => {
     try {
         const deletedProject = await projectsModel.remove(req.params.id)
         if(deletedProject > 0) {

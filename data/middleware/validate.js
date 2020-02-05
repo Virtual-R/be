@@ -1,38 +1,39 @@
 const users = require('../routes/users/usersModel')
 const projects = require('../routes/projects/projectsModel')
 
-const validateUserId = () => async (req, res, next) => {
+const validateUserId = async (req, res, next) => {
     const userId = await users.getById(req.params.id)
     if(!userId) {
-        return res.status(400).json({ message: 'Invalid user id.'})
+        return res
+            .status(400)
+            .json({ message: 'Invalid user id.'})
     }
     req.user = userId
+    console.log('userId - ', userId)
     next()
 }
 
-const validateUser = () => async (req, res, next) => {
-    if (!req.body) {
-        return res.status(400).json({ message: 'Missing required data.'})
-    } else if (!req.body.username || !req.body.password) {
-        return res.status(400).json({ message: "Missing required data - username and/or password"})
+const validateUser = async (req, res, next) => {
+    if (!req.body || !req.body.username || !req.body.password) {
+        return res
+            .status(400)
+            .json({ message: 'Missing required data.'})
+    } else {
+        next()
     }
-    next()
 }
 
-const validateProject = () => async (req, res, next) => {
-    if (!req.body) { 
+const validateProject = async (req, res, next) => {
+    if (!req.body || !req.body.userId || !req.body.title) { 
         return res
             .status(400)
             .json({ message: "Missing required data. "})
-    } else if (!req.body.userId || !req.body.title) {
-        return res
-            .status(400)
-            .json({ message: "Please fill out all required fields."})
+    } else {
+        next()
     }
-    next()
 }
 
-const validateProjectId = () => async (req, res, next) => {
+const validateProjectId = async (req, res, next) => {
     const userId = await users.getById(req.params.id)
     const projectId = await projects.getById(req.params.project_id)
 
