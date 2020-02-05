@@ -2,18 +2,16 @@ const jwt = require('jsonwebtoken');
 const secrets = require('../config/secrets')
 
 module.exports = (req, res, next) => {
-  const token = req.headers.authorization;
-  
-  if (token) {
-    jwt.verify(token, secrets.jwt, (err, decodeToken) => {
-      if (err) {
-        res.status(401).json({ message: 'Not Authorized' });
-      } else {
-        req.user = decodeToken;
-        next();
-      }
-    });
-  } else {
-    res.status(401).json({ message: 'Not Authorized' });
+  try {
+    const token = req.headers.authorization;
+    const decoded = jwt.verify(token, secrets.jwt)
+
+    req.userId = decoded.subject
+    next()
+  }
+  catch (error) {
+    return res.status(401).json({
+      message: 'Invalid credentials'
+    })
   }
 };

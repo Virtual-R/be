@@ -9,7 +9,8 @@ const get = () => {
 const getBy = (filter) => {
     return db('users')
     .where(filter)
-    .first(['id', 'username', 'password'])
+    .select(['id', 'username', 'password'])
+    .first()
 }
 
 const getById = async (id) => {
@@ -19,7 +20,14 @@ const getById = async (id) => {
 
     const projects = await db('projects')
         .where('user_id', id)
-        .select('project_id', 'user_id', 'title', 'description', 'goal_amount', 'amount_received', 'funding_completed')
+        .select(
+            'project_id', 
+            'user_id', 
+            'title', 
+            'description', 
+            'goal_amount', 
+            'amount_received', 
+            'funding_completed')
 
     projects.map((project) => {
         return {...project, funding_completed: project.funding_completed === 1 ? true : false }
