@@ -1,22 +1,29 @@
 const projectsModel = require('../projects/projectsModel')
-const router = require('express').Router()
+const router = require('express').Router({ mergeParams: true })
 const authenticate = require('../../middleware/authenticate')
 const { validateProject, validateProjectId } = require('../../middleware/validate')
 
-router.get('/', async (req, res, next) => {
-    try {
-        console.log(req.params.id)
-        const projects = await projectsModel.getById(req.params.id)
-        res.status(200).json(projects)
-    }
-    catch (error) {
-        next(error)
-    }
+router.get('/', authenticate, async (req, res, next) => {
+    console.log('req params id', req.params.userId)
+        try {
+            const projects = await projectsModel.getByUserId(req.params.userId)
+            console.log('project console log', projects)
+            if(projects) {
+                res.status(200).json(projects)
+            } else {
+                res.status(404).json({ message: "Resource not found. "})
+            }
+        }
+        catch (error) {
+            next(error)
+        }
 })
 
-router.get('/:id', validateProjectId, async (req, res, next) => {
+router.get('/:id', authenticate, async (req, res, next) => {
+    console.log('user id - ', req.params.userId)
     try {
-        const payload = await projectsModel.getById(req.params.id)
+        console.log('project id - ', req.params.id)
+        const payload = await projectsModel.getByIds(req.params.userId, req.params.id)
         res.status(200).json(payload)
     }
     catch (error) {
@@ -24,7 +31,7 @@ router.get('/:id', validateProjectId, async (req, res, next) => {
     }
 })
 
-router.post('/', validateProject, async (req, res, next) => {
+router.post('/', authenticate, async (req, res, next) => {
     try {
         const project = await projectsModel.add(req.body)
         res.status(201).json(project)
@@ -34,7 +41,7 @@ router.post('/', validateProject, async (req, res, next) => {
     }
 })
 
-router.put(':id', validateProject, authenticate, validateProjectId, async (req, res, next) => {
+router.put(':id', authenticate, async (req, res, next) => {
     const changes = {
         user_id: req.body.user_id,
         title: req.body.title,
@@ -52,7 +59,7 @@ router.put(':id', validateProject, authenticate, validateProjectId, async (req, 
     }
 })
 
-router.delete('/:id', authenticate, validateProjectId, async (req, res, next) => {
+router.delete('/:id', authenticate, async (req, res, next) => {
     try {
         const deletedProject = await projectsModel.remove(req.params.id)
         if(deletedProject > 0) {

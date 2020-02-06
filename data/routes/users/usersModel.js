@@ -9,7 +9,7 @@ const get = () => {
 const getBy = (filter) => {
     return db('users')
     .where(filter)
-    .select(['id', 'username', 'password'])
+    // .select(['id', 'username', 'password'])
     .first()
 }
 
@@ -27,7 +27,8 @@ const getById = async (id) => {
             'description', 
             'goal_amount', 
             'amount_received', 
-            'funding_completed')
+            'funding_completed',
+            )
 
     projects.map((project) => {
         return {...project, funding_completed: project.funding_completed === 1 ? true : false }

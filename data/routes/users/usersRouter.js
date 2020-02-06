@@ -5,7 +5,7 @@ const authenticate = require('../../middleware/authenticate')
 const { validateUser, validateUserId } = require('../../middleware/validate')
 const router = express.Router()
 
-router.use('/:id/projects', projectsRouter)
+router.use('/:userId/projects', projectsRouter)
 
 router.get('/', authenticate, async (req, res, next) => {
     try {
@@ -17,7 +17,7 @@ router.get('/', authenticate, async (req, res, next) => {
     }
 })
 
-router.get('/:id', authenticate, async (req, res, next) => {
+router.get('/:userId', authenticate, async (req, res, next) => {
     try { 
         const payload = await usersModel.getById(req.params.id)
         res.status(200).json(payload)
@@ -40,7 +40,7 @@ router.get('/:id', authenticate, async (req, res, next) => {
 //     }
 // })
 
-router.put('/:id', authenticate, async (req, res, next) => {
+router.put('/:userId', authenticate, async (req, res, next) => {
     const changes = {
         username: req.body.username,
         password: req.body.password,
@@ -54,7 +54,7 @@ router.put('/:id', authenticate, async (req, res, next) => {
     }
 })
 
-router.delete('/:id', authenticate, async (req, res, next) => {
+router.delete('/:userId', authenticate, async (req, res, next) => {
     try {
         const deletedUser = await usersModel.remove(req.params.id)
 
