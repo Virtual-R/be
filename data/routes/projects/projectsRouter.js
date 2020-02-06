@@ -23,7 +23,7 @@ router.get('/:id', authenticate, async (req, res, next) => {
     console.log('user id - ', req.params.userId)
     try {
         console.log('project id - ', req.params.id)
-        const payload = await projectsModel.getById(req.params.id)
+        const payload = await projectsModel.getByIds(req.params.userId, req.params.id)
         res.status(200).json(payload)
     }
     catch (error) {
