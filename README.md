@@ -52,13 +52,13 @@
 
     BaseURL: https://sixr-clone.herokuapp.com
 
-### - Project Overview Router
+## - Project Overview Router
 
 1) Project Overview:
 
     GET - /api/overview/
 
-### - Auth Router
+## - Auth Router
 
 
 2) REGISTER:
@@ -81,7 +81,7 @@
 
         * returns a token. Assign token to "Authorization" header.
 
-### - Users Router
+## - Users Router
 
 4) GET All Users:
 
@@ -91,13 +91,13 @@
 
 5) GET A Single User: 
 
-        GET - /api/users/:id
+        GET - /api/users/:userId
 
         * requires token from login function set to "Authorization" header.
 
 6) UPDATE A User: 
 
-        PUT - /api/users/:id
+        PUT - /api/users/:userId
 
         {
             "username":"insert username here", <----required
@@ -106,8 +106,57 @@
 
 7) DELETE A User: 
 
-        DELETE - /api/users/:id
+        DELETE - /api/users/:userId
 
+## - Projects Router
+
+8) GET All Projects for a User :
+
+        GET - /:userId/projects/
+
+        * requires token from login function set to "Authorization" header.
+
+9) GET A Single Project attached to a User : 
+
+        GET - /:userId/projects/:id
+
+        * requires token from login function set to "Authorization" header.
+
+10) ADD A User: 
+
+        POST - /:userId/projects/
+
+        {
+            user_id: same # as user.id  <----required
+            title: string, required     <----required
+            description: string
+            goal_amount: integer
+            amount_received: integer
+            funding_completed: boolean
+        }
+
+        * requires token from login function set to "Authorization" header.
+
+11) UPDATE A User: 
+
+        PUT - /:userId/projects/:id
+
+        {
+            user_id: same # as user.id  <----required
+            title: string, required     <----required
+            description: string
+            goal_amount: integer
+            amount_received: integer
+            funding_completed: boolean
+        }
+
+        * requires token from login function set to "Authorization" header.
+
+12) DELETE A User: 
+
+        DELETE - /:userId/projects/:id
+
+        * requires token from login function set to "Authorization" header.
 
 # `Developer`
 
