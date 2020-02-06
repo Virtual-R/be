@@ -1,8 +1,7 @@
 const db = require('../../config/dbConfig')
 
-const get = (id) => {
+const get = () => {
     return db('projects')
-        .where("user_id", id)
         .select()
 }
 
@@ -68,9 +67,11 @@ const add = (project) => {
 //         return getById(project_id)
 // }
 
-const update = (id, changes) => {
+const update = (userId, id, changes) => {
     return db('projects')
-        .where({ id })
+        .where({ 
+            user_id: userId, 
+            project_id: id })
         .update(changes)
         .returning('*')
 }
