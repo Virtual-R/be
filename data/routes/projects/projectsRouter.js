@@ -4,14 +4,10 @@ const authenticate = require('../../middleware/authenticate')
 const { validateProject, validateProjectId } = require('../../middleware/validate')
 
 router.get('/', authenticate, async (req, res, next) => {
-    console.log('req params id', req.params.userId)
         try {
             const projects = await projectsModel.getByUserId(req.params.userId)
-            console.log('project console log', projects)
             if(projects) {
                 res.status(200).json(projects)
-            } else {
-                res.status(404).json({ message: "Resource not found. "})
             }
         }
         catch (error) {
@@ -20,9 +16,7 @@ router.get('/', authenticate, async (req, res, next) => {
 })
 
 router.get('/:id', authenticate, async (req, res, next) => {
-    console.log('user id - ', req.params.userId)
     try {
-        console.log('project id - ', req.params.id)
         const payload = await projectsModel.getByIds(req.params.userId, req.params.id)
         res.status(200).json(payload)
     }
@@ -62,8 +56,9 @@ router.put('/:id', authenticate, async (req, res, next) => {
 router.delete('/:id', authenticate, async (req, res, next) => {
     try {
         const deletedProject = await projectsModel.remove(req.params.id)
+
         if(deletedProject > 0) {
-            res.status(204).json({ message: 'Project was deleted.'})
+            res.status(204).json({ message: `Project ${deletedProject.name} was deleted.`})
         }
     }
     catch (error) {

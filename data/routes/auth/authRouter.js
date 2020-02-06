@@ -10,13 +10,15 @@ const { validateUser, validateUserId } = require('../../middleware/validate')
 router.post('/register', async (req, res, next) => {
     try {
         const { username, password } = req.body
-        const newUser = 
-            username && password
-            ? await usersModel.add({ username, password})
-            : res.status(500).json({ message: "Missing required information."})
-        res
-            .status(201)
-            .json(newUser)
+
+        //this will be handled by the validate middleware eventually.
+        if(!username || !password) {
+            res.status(400).json({ message: "Missing required data."})
+        } else {
+            const newUser = username && password 
+                await usersModel.add({ username, password})
+                res.status(201).json(newUser)
+        }
     }
     catch (error) {
         next(error)
@@ -39,8 +41,8 @@ router.post('/login', async (req, res, next) => {
 
     try {
         const { username, password } = req.body;
-        console.log('username', username)
-        console.log('password', password)
+        // console.log('username', username)
+        // console.log('password', password)
         const user = await usersModel.getBy({ username }).first()
         const passwordValid = await bcrypt.compare(password, user.password)
         
@@ -57,7 +59,7 @@ router.post('/login', async (req, res, next) => {
         }
     }
     catch (error) {
-        console.log(error)
+        // console.log(error)
         next(error)
     }
 })

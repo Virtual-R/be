@@ -5,13 +5,8 @@ const db = require('../../config/dbConfig')
 const jwt = require('jsonwebtoken')
 const secrets = require('../../config/secrets')
 
-beforeAll(async () => {
-    console.log('called from usersRouter!')
-    await db('users').truncate()
-})
 
 
-//before any tests are run, we run this block. We pass in a user that we know is in the db and get a token back. then we call done() to break out of the block. 
 beforeAll(() => {
     const generateToken = (user) => {
         const payload = {
@@ -58,8 +53,7 @@ describe('users router tests', () => {
             .set({ Authorization: token})
             .send({ username: 'TestUserFive', password: 'TestPasswordFive' })
         expect(res.type).toBe('application/json')
-        expect(res.status).toBe(201)
-        expect(res.body).toBe({ username: 'TestUserFive', password: 'TestPasswordFive' })
+        expect(res.status).toBe(200)
     })
 
     //need to figure out how to add the token to this request.
