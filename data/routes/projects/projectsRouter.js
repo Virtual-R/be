@@ -41,7 +41,7 @@ router.post('/', authenticate, async (req, res, next) => {
     }
 })
 
-router.put(':id', authenticate, async (req, res, next) => {
+router.put('/:id', authenticate, async (req, res, next) => {
     const changes = {
         user_id: req.body.user_id,
         title: req.body.title,
@@ -51,7 +51,7 @@ router.put(':id', authenticate, async (req, res, next) => {
         funding_completed: req.body.funding_completed,
     }
     try {
-        const updates = await projectsModel.update(req.params.id, changes)
+        const updates = await projectsModel.update(req.params.userId, req.params.id, changes)
         res.status(200).json(updates)
     }
     catch (error) {
