@@ -37,16 +37,18 @@ const getById = async (id) => {
 }
 
 //Apparently this is how I would need to set it up for postgres?
-const add = (user) => {
+const add = async (user) => {
     user.password =  bcrypt.hashSync(user.password, 10)
-    return db('users').insert(user).returning('*')
+    const [id] = await db('users').insert(user, process.env.NODE_ENV === 'production' ? 'id' : null).returning('*')
+    return getById(id)
 }
 
 //this is how I would need it to migrate to postgres
 const update = (id, changes) => {
     return db('users')
         .where({ id })
-        .update(changes).returning('*')
+        .update(changes)
+        .returning('*')
 }
 
 const remove = (id) => {

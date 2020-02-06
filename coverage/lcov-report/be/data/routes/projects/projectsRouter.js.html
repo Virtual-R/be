@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.3% </span>
+                <span class="strong">26.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/33</span>
+                <span class='fraction'>10/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.3% </span>
+                <span class="strong">26.32% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/33</span>
+                <span class='fraction'>10/38</span>
             </div>
         
             
@@ -123,7 +123,14 @@
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -133,6 +140,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -140,6 +152,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -190,24 +204,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span></td><td class="text"><pre class="prettyprint lang-js">const projectsModel = require('../projects/projectsModel')
-const router = require('express').Router()
+const router = require('express').Router({ mergeParams: true })
 const authenticate = require('../../middleware/authenticate')
 const { validateProject, validateProjectId } = require('../../middleware/validate')
 &nbsp;
-router.get('/', <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(req.params.id)</span>
-        const projects = <span class="cstat-no" title="statement not covered" >await projectsModel.getById(req.params.id)</span>
-<span class="cstat-no" title="statement not covered" >        res.status(200).json(projects)</span>
-    }
-    catch (error) {
-<span class="cstat-no" title="statement not covered" >        next(error)</span>
-    }
+router.get('/', authenticate, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
+<span class="cstat-no" title="statement not covered" >    console.log('req params id', req.params.userId)</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+            const projects = <span class="cstat-no" title="statement not covered" >await projectsModel.getByUserId(req.params.userId)</span>
+<span class="cstat-no" title="statement not covered" >            console.log('project console log', projects)</span>
+<span class="cstat-no" title="statement not covered" >            if(projects) {</span>
+<span class="cstat-no" title="statement not covered" >                res.status(200).json(projects)</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                res.status(404).json({ message: "Resource not found. "})</span>
+            }
+        }
+        catch (error) {
+<span class="cstat-no" title="statement not covered" >            next(error)</span>
+        }
 })
 &nbsp;
-router.get('/:id', validateProjectId, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
+router.get('/:id', authenticate, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
+<span class="cstat-no" title="statement not covered" >    console.log('user id - ', req.params.userId)</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
-        const payload = <span class="cstat-no" title="statement not covered" >await projectsModel.getById(req.params.id)</span>
+<span class="cstat-no" title="statement not covered" >        console.log('project id - ', req.params.id)</span>
+        const payload = <span class="cstat-no" title="statement not covered" >await projectsModel.getByIds(req.params.userId, req.params.id)</span>
 <span class="cstat-no" title="statement not covered" >        res.status(200).json(payload)</span>
     }
     catch (error) {
@@ -215,7 +236,7 @@ router.get('/:id', validateProjectId, <span class="fstat-no" title="function not
     }
 })
 &nbsp;
-router.post('/', validateProject, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
+router.post('/', authenticate, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
 <span class="cstat-no" title="statement not covered" >    try {</span>
         const project = <span class="cstat-no" title="statement not covered" >await projectsModel.add(req.body)</span>
 <span class="cstat-no" title="statement not covered" >        res.status(201).json(project)</span>
@@ -225,7 +246,7 @@ router.post('/', validateProject, <span class="fstat-no" title="function not cov
     }
 })
 &nbsp;
-router.put(':id', validateProject, authenticate, validateProjectId, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
+router.put('/:id', authenticate, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
     const changes = <span class="cstat-no" title="statement not covered" >{</span>
         user_id: req.body.user_id,
         title: req.body.title,
@@ -235,7 +256,7 @@ router.put(':id', validateProject, authenticate, validateProjectId, <span class=
         funding_completed: req.body.funding_completed,
     }
 <span class="cstat-no" title="statement not covered" >    try {</span>
-        const updates = <span class="cstat-no" title="statement not covered" >await projectsModel.update(req.params.id, changes)</span>
+        const updates = <span class="cstat-no" title="statement not covered" >await projectsModel.update(req.params.userId, req.params.id, changes)</span>
 <span class="cstat-no" title="statement not covered" >        res.status(200).json(updates)</span>
     }
     catch (error) {
@@ -243,7 +264,7 @@ router.put(':id', validateProject, authenticate, validateProjectId, <span class=
     }
 })
 &nbsp;
-router.delete('/:id', authenticate, validateProjectId, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
+router.delete('/:id', authenticate, <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
 <span class="cstat-no" title="statement not covered" >    try {</span>
         const deletedProject = <span class="cstat-no" title="statement not covered" >await projectsModel.remove(req.params.id)</span>
 <span class="cstat-no" title="statement not covered" >        if(deletedProject &gt; 0) {</span>
@@ -262,7 +283,7 @@ module.exports = router;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Feb 05 2020 14:53:59 GMT-0600 (Central Standard Time)
+                at Thu Feb 06 2020 11:35:37 GMT-0600 (Central Standard Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>

@@ -56,14 +56,14 @@
 
 1) Project Overview:
 
-    GET - /api/overview/
+    GET All Projects - /api/overview/
 
 ## - Auth Router
 
 
 2) REGISTER:
 
-    POST - /api/auth/register/
+    POST a new User - /api/auth/register/
 
         {
             "username":"insert username here", <----required
@@ -72,7 +72,7 @@
 
 3) LOGIN: 
 
-    POST - /api/auth/login/
+    POST to log in as a User - /api/auth/login/
 
         {
             "username":"insert username here", <----required, unique.
