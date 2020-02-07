@@ -1,6 +1,6 @@
 exports.up = async function(knex) {
     await knex.schema.createTable('projects', (table) => {
-        table.increments('project_id')
+        table.increments('project_id').primary()
         table.integer('user_id')
             .notNullable()
             .references('id')
