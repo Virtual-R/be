@@ -2,7 +2,7 @@ const users = require('../routes/users/usersModel')
 const projects = require('../routes/projects/projectsModel')
 
 const validateUserId = async (req, res, next) => {
-    const userId = await users.getById(req.params.id)
+    const userId = await users.getById(req.params.userId)
     if(!userId) {
         return res
             .status(400)
@@ -24,7 +24,7 @@ const validateUser = async (req, res, next) => {
 }
 
 const validateProject = async (req, res, next) => {
-    if (!req.body || !req.body.userId || !req.body.title) { 
+    if (!req.body || !req.body.user_id || !req.body.title) { 
         return res
             .status(400)
             .json({ message: "Missing required data. "})
