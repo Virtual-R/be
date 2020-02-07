@@ -48,7 +48,8 @@ router.post('/login', async (req, res, next) => {
         
         if(user && passwordValid) {
             const token = generateToken(user)
-            const { id, username } = user
+            const id = user.id
+            const username = user.username
             res.status(200).json({
                 message: `Welcome, ${username}.`,
                 token: token,
