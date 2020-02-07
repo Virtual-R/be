@@ -9,26 +9,18 @@ const get = () => {
 const getBy = (filter) => {
     return db('users')
     .where(filter)
-    // .select(['id', 'username', 'password'])
+    .select(['id', 'username', 'password'])
     .first()
 }
 
 const getById = async (id) => {
     const user = await db('users')
         .where({ id })
-        .first('id', 'username')
+        .first('id', 'username', 'password')
 
     const projects = await db('projects')
         .where('user_id', id)
-        .select(
-            'project_id', 
-            'user_id', 
-            'title', 
-            'description', 
-            'goal_amount', 
-            'amount_received', 
-            'funding_completed',
-            )
+        .select('*')
 
     projects.map((project) => {
         return {...project, funding_completed: project.funding_completed === 1 ? true : false }
@@ -44,8 +36,8 @@ const add = async (user) => {
 }
 
 //this is how I would need it to migrate to postgres
-const update = (id, changes) => {
-    return db('users')
+const update = async (id, changes) => {
+    await db('users')
         .where({ id })
         .update(changes)
         .returning('*')

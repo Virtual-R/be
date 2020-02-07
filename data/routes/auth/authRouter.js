@@ -10,13 +10,15 @@ const { validateUser, validateUserId } = require('../../middleware/validate')
 router.post('/register', async (req, res, next) => {
     try {
         const { username, password } = req.body
-        const newUser = 
-            username && password
-            ? await usersModel.add({ username, password})
-            : res.status(500).json({ message: "Missing required information."})
-        res
-            .status(201)
-            .json(newUser)
+
+        //this will be handled by the validate middleware eventually.
+        if(!username || !password) {
+            res.status(400).json({ message: "Missing required data."})
+        } else {
+            const newUser = username && password 
+                await usersModel.add({ username, password})
+                res.status(201).json(newUser)
+        }
     }
     catch (error) {
         next(error)
@@ -39,16 +41,20 @@ router.post('/login', async (req, res, next) => {
 
     try {
         const { username, password } = req.body;
-        console.log('username', username)
-        console.log('password', password)
-        const user = await usersModel.getBy({ username }).first()
+        // console.log('username', username)
+        // console.log('password', password)
+        const user = await usersModel.getBy({ username })/*.first()*/
         const passwordValid = await bcrypt.compare(password, user.password)
         
         if(user && passwordValid) {
             const token = generateToken(user)
+            const id = user.id
+            const username = user.username
             res.status(200).json({
-                message: `Welcome, ${user.username}.`,
+                message: `Welcome, ${username}.`,
                 token: token,
+                username,
+                id
             })
         } else if (!user || !passwordValid) { 
             res.status(401).json({
@@ -57,7 +63,7 @@ router.post('/login', async (req, res, next) => {
         }
     }
     catch (error) {
-        console.log(error)
+        // console.log(error)
         next(error)
     }
 })

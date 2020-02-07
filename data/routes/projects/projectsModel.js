@@ -32,7 +32,8 @@ const getByUserId = async (id) => {
 
 const getById = async (id) => {
     const project = await db('projects')
-        .where('project_id', id)
+        // .where('project_id', id)
+        .where({ project_id: id})
         .first()
         return project
 }
@@ -76,9 +77,9 @@ const update = (userId, id, changes) => {
         .returning('*')
 }
 
-const remove = (project_id) => {
+const remove = (id) => {
     return db('projects')
-        .where({ project_id })
+        .where({ project_id: id})
         .del()
 }
 

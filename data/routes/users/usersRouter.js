@@ -19,7 +19,7 @@ router.get('/', authenticate, async (req, res, next) => {
 
 router.get('/:userId', authenticate, async (req, res, next) => {
     try { 
-        const payload = await usersModel.getById(req.params.id)
+        const payload = await usersModel.getById(req.params.userId)
         res.status(200).json(payload)
     }
     catch (error) {
@@ -46,7 +46,7 @@ router.put('/:userId', authenticate, async (req, res, next) => {
         password: req.body.password,
     }
     try {
-        const updates = await usersModel.update(req.params.id, changes)
+        const updates = await usersModel.update(req.params.userId, changes)
         res.status(200).json(updates)
     }
     catch (error) {
@@ -56,10 +56,13 @@ router.put('/:userId', authenticate, async (req, res, next) => {
 
 router.delete('/:userId', authenticate, async (req, res, next) => {
     try {
-        const deletedUser = await usersModel.remove(req.params.id)
+        console.log('delete function id', req.params.userId)
+        const deletedUser = await usersModel.remove(req.params.userId)
 
         if(deletedUser > 0) {
-            res.status(204).json({ message: 'User was deleted.'})
+            res.status(204).json(deletedUser)
+        } else if (deletedUser === 0) {
+            res.status(500).json({message: "User could not be deleted."})
         }
     }
     catch (error) {
