@@ -16,7 +16,7 @@ const getBy = (filter) => {
 const getById = async (id) => {
     const user = await db('users')
         .where({ id })
-        .first('id', 'username')
+        .first('id', 'username', 'password')
 
     const projects = await db('projects')
         .where('user_id', id)

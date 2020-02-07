@@ -56,7 +56,7 @@ const getByIds = async (userId, id) => {
 //apparently this is how it would need to be set up for the migration to postgres?
 const add = (project) => {
     return db('projects')
-        .insert(project)
+        .insert(project, process.env.NODE_ENV === 'production' ? 'project_id' : null)
         .returning('*')
 }
 

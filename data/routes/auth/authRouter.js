@@ -43,7 +43,7 @@ router.post('/login', async (req, res, next) => {
         const { username, password } = req.body;
         // console.log('username', username)
         // console.log('password', password)
-        const user = await usersModel.getBy({ username }).first()
+        const user = await usersModel.getBy({ username })/*.first()*/
         const passwordValid = await bcrypt.compare(password, user.password)
         
         if(user && passwordValid) {
@@ -54,7 +54,7 @@ router.post('/login', async (req, res, next) => {
                 message: `Welcome, ${username}.`,
                 username,
                 id,
-                token: token,
+                token,
             })
         } else if (!user || !passwordValid) { 
             res.status(401).json({
@@ -67,5 +67,6 @@ router.post('/login', async (req, res, next) => {
         next(error)
     }
 })
+
 
 module.exports = router;
