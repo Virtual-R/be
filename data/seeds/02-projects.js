@@ -27,5 +27,14 @@ exports.seed = async (knex) => {
       amount_received: 2006,
       funding_completed: false,
     },
+    {
+      project_id: 4,
+      user_id: 2,
+      title: "Swamparooney",
+      description: "Swamparooney is a VR experience aimed at classroom exploration of wetlands. It aims to help kids understand why wild places are important. ",
+      goal_amount: 5000,
+      amount_received: 2006,
+      funding_completed: false,
+    },
   ])
 }

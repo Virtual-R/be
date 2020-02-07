@@ -2,10 +2,8 @@ const request = require('supertest')
 const server = require('../../../api/server')
 const db = require('../../config/dbConfig')
 
-
 beforeAll(async () => {
-    console.log('called from the auth router!')
-    await db('users').truncate()    
+    await db.seed.run()
 })
 
 //REGISTRATION

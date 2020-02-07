@@ -34,8 +34,8 @@ const validateProject = async (req, res, next) => {
 }
 
 const validateProjectId = async (req, res, next) => {
-    const userId = await users.getById(req.params.id)
-    const projectId = await projects.getById(req.params.project_id)
+    const userId = await users.getById(req.params.userId)
+    const projectId = await projects.getById(req.params.id)
 
     if (!userId) {
         return res.status(400).json({message: "Invalid user id."})
