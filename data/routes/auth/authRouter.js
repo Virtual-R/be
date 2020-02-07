@@ -16,7 +16,7 @@ router.post('/register', async (req, res, next) => {
             res.status(400).json({ message: "Missing required data."})
         } else {
             const newUser = username && password 
-                await usersModel.add({ username, password})
+                await usersModel.add({ username, password })
                 res.status(201).json(newUser)
         }
     }
@@ -43,7 +43,7 @@ router.post('/login', async (req, res, next) => {
         const { username, password } = req.body;
         // console.log('username', username)
         // console.log('password', password)
-        const user = await usersModel.getBy({ username })/*.first()*/
+        const user = await usersModel.getBy({ username }).first()
         const passwordValid = await bcrypt.compare(password, user.password)
         
         if(user && passwordValid) {
@@ -52,9 +52,9 @@ router.post('/login', async (req, res, next) => {
             const username = user.username
             res.status(200).json({
                 message: `Welcome, ${username}.`,
-                token: token,
                 username,
-                id
+                id,
+                token: token,
             })
         } else if (!user || !passwordValid) { 
             res.status(401).json({

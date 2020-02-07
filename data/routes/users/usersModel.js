@@ -16,7 +16,7 @@ const getBy = (filter) => {
 const getById = async (id) => {
     const user = await db('users')
         .where({ id })
-        .first('id', 'username', 'password')
+        .first('id', 'username')
 
     const projects = await db('projects')
         .where('user_id', id)
@@ -31,7 +31,9 @@ const getById = async (id) => {
 //Apparently this is how I would need to set it up for postgres?
 const add = async (user) => {
     user.password =  bcrypt.hashSync(user.password, 10)
-    const [id] = await db('users').insert(user, process.env.NODE_ENV === 'production' ? 'id' : null).returning('*')
+    const [id] = await db('users')
+        .insert(user, process.env.NODE_ENV === 'production' ? 'id' : null)
+        .returning('*')
     return getById(id)
 }
 
