@@ -35,7 +35,7 @@ const add = async (user) => {
         .insert(user, process.env.NODE_ENV === 'production' ? 'id' : null)
         .returning('*')
         console.log('new user id', id.id)
-    return getById(id.id)
+    return getById(process.env.NODE_ENV === 'production'? id.id : id)
 }
 
 //this is how I would need it to migrate to postgres
