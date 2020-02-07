@@ -53,12 +53,16 @@ router.put('/:id', authenticate, async (req, res, next) => {
     }
 })
 
+// /api/users/:userId/projects
 router.delete('/:id', authenticate, async (req, res, next) => {
     try {
+        console.log('delete project function', req.params.id)
         const deletedProject = await projectsModel.remove(req.params.id)
-
-        if(deletedProject > 0) {
-            res.status(204).json({ message: `Project ${deletedProject.name} was deleted.`})
+        console.log(deletedProject)
+        if(deletedProject) {
+            res.status(204)
+        } else {
+            res.status(404).json({ message: "Project not found."})
         }
     }
     catch (error) {

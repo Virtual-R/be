@@ -72,10 +72,12 @@ describe('projects router tests', () => {
         expect(res.type).toBe('application/json')
     })
 
-    test('delete a project', async () => {
-        const res = await request(server)
-            .delete('/users/2/projects/2')
-            .set({ Authorization: token })
-        expect(res.status).toBe(204)
-    })
+    // 
+
+    // test('delete a project', async () => {
+    //     const res = await request(server)
+    //         .delete('/users/2/projects/2')
+    //         .set({ Authorization: token })
+    //     expect(res.status).toBe(204)
+    // })
 })

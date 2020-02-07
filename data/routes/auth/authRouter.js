@@ -51,6 +51,7 @@ router.post('/login', async (req, res, next) => {
             res.status(200).json({
                 message: `Welcome, ${user.username}.`,
                 token: token,
+                user
             })
         } else if (!user || !passwordValid) { 
             res.status(401).json({
