@@ -43,15 +43,17 @@ router.post('/login', async (req, res, next) => {
         const { username, password } = req.body;
         // console.log('username', username)
         // console.log('password', password)
-        const user = await usersModel.getBy({ username }).first()
+        const user = await usersModel.getBy({ username })/*.first()*/
         const passwordValid = await bcrypt.compare(password, user.password)
         
         if(user && passwordValid) {
             const token = generateToken(user)
+            const { id, username } = user
             res.status(200).json({
-                message: `Welcome, ${user.username}.`,
+                message: `Welcome, ${username}.`,
                 token: token,
-                user
+                username,
+                id
             })
         } else if (!user || !passwordValid) { 
             res.status(401).json({
