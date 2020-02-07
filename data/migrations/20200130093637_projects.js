@@ -9,8 +9,8 @@ exports.up = async function(knex) {
             .onUpdate('CASCADE')
         table.string('title', 256).notNullable()
         table.string('description', 1024)
-        table.integer('goal_amount')
-        table.integer('amount_received')
+        table.decimal('goal_amount')
+        table.decimal('amount_received')
         table.boolean('funding_completed').defaultTo(false)
     })
 };
