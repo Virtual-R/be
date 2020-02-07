@@ -9,14 +9,14 @@ const get = () => {
 const getBy = (filter) => {
     return db('users')
     .where(filter)
-    // .select(['id', 'username', 'password'])
+    .select(['id', 'username', 'password'])
     .first()
 }
 
 const getById = async (id) => {
     const user = await db('users')
         .where({ id })
-        .first()
+        .first('id', 'username', 'password')
 
     const projects = await db('projects')
         .where('user_id', id)
